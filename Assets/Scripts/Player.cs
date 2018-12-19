@@ -177,7 +177,14 @@ public class Player : MonoBehaviour
     {
         if (bombPrefab)
         { //Check if bomb prefab is assigned first
-            Instantiate(bombPrefab, myTransform.position, bombPrefab.transform.rotation);
+
+            // The bombs snap into position when dropped so they align nicely with the grid on the floor. Each tile on this grid is 1×1.
+            // Calls for the x and z values of the player position
+            Vector3 position = myTransform.position;
+            position.x = Mathf.RoundToInt(position.x);
+            position.z = Mathf.RoundToInt(position.z);
+
+            Instantiate(bombPrefab, position, bombPrefab.transform.rotation);            
         }
     }
 
