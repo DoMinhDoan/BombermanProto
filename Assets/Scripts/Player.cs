@@ -53,7 +53,7 @@ public class Player : MonoBehaviour
 
     //Prefabs
     public GameObject bombPrefab;
-    public GlobalStateManager globalStateManager;
+    public GameObject gameManager;
 
     //Cached components
     private Rigidbody rigidBody;
@@ -196,7 +196,7 @@ public class Player : MonoBehaviour
         if (other.CompareTag ("Explosion"))
         {
             Debug.Log ("P" + playerNumber + " hit by explosion!");
-            globalStateManager.PlayerDied(playerNumber);
+            gameManager.GetComponent<GlobalStateManager>().PlayerDied(playerNumber);
             
             gameObject.SetActive(false);
             Destroy(gameObject);
