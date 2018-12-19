@@ -30,7 +30,7 @@
 
 using UnityEngine;
 using System.Collections;
-using TMPro;
+using UnityEngine.UI;
 
 public class GlobalStateManager : MonoBehaviour
 {
@@ -62,16 +62,16 @@ public class GlobalStateManager : MonoBehaviour
         {
             if(deadPlayerNumber == 1)
             {
-                playerWin.GetComponent<TextMeshPro>().text = "Player 2 Win";
+                playerWin.GetComponent<Text>().text = "Player 2 Win";
             }
             else if(deadPlayerNumber == 2)
             {
-                playerWin.GetComponent<TextMeshPro>().text = "Player 1 Win";
+                playerWin.GetComponent<Text>().text = "Player 1 Win";
             }
         }
         else
         {
-            playerWin.GetComponent<TextMeshPro>().text = "In A Draw";
+            playerWin.GetComponent<Text>().text = "In A Draw";
         }
     }
 }
