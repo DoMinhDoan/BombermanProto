@@ -197,8 +197,11 @@ public class Player : MonoBehaviour
         {
             Debug.Log ("P" + playerNumber + " hit by explosion!");
             globalStateManager.PlayerDied(playerNumber);
-            isDead = true;
+            
+            gameObject.SetActive(false);
             Destroy(gameObject);
+
+            isDead = true;
         }
     }
 }
