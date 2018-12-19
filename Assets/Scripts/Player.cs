@@ -44,6 +44,8 @@ public class Player : MonoBehaviour
     //Can the player drop bombs?
     public bool canMove = true;
     //Can the player move?
+    // Player State
+    private bool isDead = false;
 
     private int bombs = 2;
     //Amount of bombs the player has left to drop, gets decreased as the player
@@ -51,11 +53,12 @@ public class Player : MonoBehaviour
 
     //Prefabs
     public GameObject bombPrefab;
+    public GlobalStateManager globalStateManager;
 
     //Cached components
     private Rigidbody rigidBody;
     private Transform myTransform;
-    private Animator animator;
+    private Animator animator;    
 
     // Use this for initialization
     void Start ()
@@ -193,6 +196,9 @@ public class Player : MonoBehaviour
         if (other.CompareTag ("Explosion"))
         {
             Debug.Log ("P" + playerNumber + " hit by explosion!");
+            globalStateManager.PlayerDied(playerNumber);
+            isDead = true;
+            Destroy(gameObject);
         }
     }
 }

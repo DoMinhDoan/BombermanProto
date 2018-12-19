@@ -30,11 +30,48 @@
 
 using UnityEngine;
 using System.Collections;
+using TMPro;
 
 public class GlobalStateManager : MonoBehaviour
 {
+    private int deadPlayer = 0;
+    private int deadPlayerNumber = -1;
+
+    public GameObject playerWin;
+
     public void PlayerDied (int playerNumber)
     {
+        deadPlayer++;
 
+        if(deadPlayer == 1)
+        {
+            deadPlayerNumber = playerNumber;
+            Invoke("CheckPlayerDeath", 1.0f);
+        }
+    }
+
+    void Start()
+    {
+        playerWin.SetActive(false);
+    }
+
+    void CheckPlayerDeath()
+    {
+        playerWin.SetActive(true);
+        if (deadPlayer == 1)
+        {
+            if(deadPlayerNumber == 1)
+            {
+                playerWin.GetComponent<TextMeshPro>().text = "Player 2 Win";
+            }
+            else if(deadPlayerNumber == 2)
+            {
+                playerWin.GetComponent<TextMeshPro>().text = "Player 1 Win";
+            }
+        }
+        else
+        {
+            playerWin.GetComponent<TextMeshPro>().text = "In A Draw";
+        }
     }
 }

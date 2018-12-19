@@ -7,6 +7,8 @@ public class Bomb : MonoBehaviour
     public GameObject explosionPrefab;
     public LayerMask layerMask;
 
+    bool isExploded = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,6 +33,7 @@ public class Bomb : MonoBehaviour
 
         // Disables the mesh renderer, making the bomb invisible.
         GetComponent<MeshRenderer>().enabled = false;
+        isExploded = true;
 
         // Disables the collider, allowing players to move through and walk into an explosion.
         transform.Find("Collider").gameObject.SetActive(false);
@@ -59,5 +62,14 @@ public class Bomb : MonoBehaviour
             }
         }
         yield return new WaitForSeconds(.05f);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!isExploded && other.gameObject.CompareTag("Explosion"))
+        {
+            CancelInvoke("Explode");
+            Explode();
+        }
     }
 }
