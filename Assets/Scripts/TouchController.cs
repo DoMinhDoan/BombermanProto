@@ -4,48 +4,51 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class TouchController : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+enum eMovementDirection
 {
-    public bool isBombPressed = false;
+    Empty = -1,
+    Up = 0,
+    Down = 1,
+    Left = 2,
+    Right = 3
+}
 
-    public Button bombButton;
-
-    enum eMovementDirection
-    {
-        Empty = -1,
-        Up = 0,
-        Down = 1,
-        Left = 2,
-        Right = 3
-    }
-
-    private int isInDirection = (int)eMovementDirection.Empty;
-
-    private void buttonCallBack(Button buttonPressed)
-    {
-        if (buttonPressed == bombButton)
-        {
-            Debug.Log("Clicked: " + bombButton.name);
-        }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+public class TouchController : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
+{
+    
+    public static bool isBombPressed = false;
+    public static int isInDirection = (int)eMovementDirection.Empty;
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        Debug.Log("The mouse click was released");
-        //Debug.Log("UP: " + eventData.pointerCurrentRaycast.gameObject.name);
-        isBombPressed = true;
-
+        Debug.Log("UP: " + eventData.pointerCurrentRaycast.gameObject.name);
+        if(eventData.pointerCurrentRaycast.gameObject.name.Contains("BombIcon"))
+        {
+            isBombPressed = true;
+        }
+        else if (eventData.pointerCurrentRaycast.gameObject.name.Contains("TouchPad"))
+        {
+            isInDirection = (int)eMovementDirection.Empty;
+        }
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log("The mouse click was pressed");
-        //Debug.Log("DOWN: " + eventData.pointerCurrentRaycast.gameObject.name);
+        if (eventData.pointerCurrentRaycast.gameObject.name.Contains("TouchPadLeft"))
+        {
+            isInDirection = (int)eMovementDirection.Left;
+        }
+        else if (eventData.pointerCurrentRaycast.gameObject.name.Contains("TouchPadRight"))
+        {
+            isInDirection = (int)eMovementDirection.Right;
+        }
+        else if (eventData.pointerCurrentRaycast.gameObject.name.Contains("TouchPadUp"))
+        {
+            isInDirection = (int)eMovementDirection.Up;
+        }
+        else if (eventData.pointerCurrentRaycast.gameObject.name.Contains("TouchPadDown"))
+        {
+            isInDirection = (int)eMovementDirection.Down;
+        }
     }
 }

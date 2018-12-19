@@ -138,38 +138,40 @@ public class Player : MonoBehaviour
     /// </summary>
     private void UpdatePlayer2Movement ()
     {
-        if (Input.GetKey (KeyCode.UpArrow))
+        if (Input.GetKey (KeyCode.UpArrow) || TouchController.isInDirection == (int)eMovementDirection.Up)
         { //Up movement
             rigidBody.velocity = new Vector3 (rigidBody.velocity.x, rigidBody.velocity.y, moveSpeed);
             myTransform.rotation = Quaternion.Euler (0, 0, 0);
             animator.SetBool ("Walking", true);
         }
 
-        if (Input.GetKey (KeyCode.LeftArrow))
+        if (Input.GetKey (KeyCode.LeftArrow) || TouchController.isInDirection == (int)eMovementDirection.Left)
         { //Left movement
             rigidBody.velocity = new Vector3 (-moveSpeed, rigidBody.velocity.y, rigidBody.velocity.z);
             myTransform.rotation = Quaternion.Euler (0, 270, 0);
             animator.SetBool ("Walking", true);
         }
 
-        if (Input.GetKey (KeyCode.DownArrow))
+        if (Input.GetKey (KeyCode.DownArrow) || TouchController.isInDirection == (int)eMovementDirection.Down)
         { //Down movement
             rigidBody.velocity = new Vector3 (rigidBody.velocity.x, rigidBody.velocity.y, -moveSpeed);
             myTransform.rotation = Quaternion.Euler (0, 180, 0);
             animator.SetBool ("Walking", true);
         }
 
-        if (Input.GetKey (KeyCode.RightArrow))
+        if (Input.GetKey (KeyCode.RightArrow) || TouchController.isInDirection == (int)eMovementDirection.Right)
         { //Right movement
             rigidBody.velocity = new Vector3 (moveSpeed, rigidBody.velocity.y, rigidBody.velocity.z);
             myTransform.rotation = Quaternion.Euler (0, 90, 0);
             animator.SetBool ("Walking", true);
         }
 
-        if (canDropBombs && (Input.GetKeyDown (KeyCode.KeypadEnter) || Input.GetKeyDown (KeyCode.Return)))
+        if (canDropBombs && (Input.GetKeyDown (KeyCode.KeypadEnter) || Input.GetKeyDown (KeyCode.Return)) || TouchController.isBombPressed)
         { //Drop Bomb. For Player 2's bombs, allow both the numeric enter as the return key or players 
             //without a numpad will be unable to drop bombs
             DropBomb ();
+
+            TouchController.isBombPressed = false;
         }
     }
 
